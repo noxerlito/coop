@@ -18,6 +18,7 @@ YARN = $(DOCKER_COMP) exec node yarn
 PHPUNIT       = $(PHP) vendor/bin/phpunit
 PHPSTAN       = $(PHP) vendor/bin/phpstan
 PHP_CS_FIXER  = $(PHP) vendor/bin/php-cs-fixer
+TWIGCS        = $(PHP) vendor/bin/twigcs
 
 ## —— 🎵 🐳 The Symfony Docker Makefile 🐳 🎵 ——————————————————————————————————
 help: ## Outputs this help screen
@@ -61,6 +62,11 @@ cc: sf
 fixtures: ## Load fixtures
 	@$(SYMFONY) doctrine:fixtures:load
 
+db: ## Build the DB, control the schema validity, load fixtures and check the migration status
+	@$(SYMFONY) doctrine:cache:clear-metadata
+	@$(SYMFONY) doctrine:database:create --if-not-exists
+	@$(SYMFONY) doctrine:migrations:migrate
+
 migrations: ## Generate migrations
 	@$(SYMFONY) doctrine:migrations:diff --formatted
 
@@ -87,5 +93,8 @@ stan: ## Run PHPStan
 fix: ## Fix files with php-cs-fixer
 	@$(PHP_CS_FIXER) fix --allow-risky=yes
 
+lint-php: ## Lint files with php-cs-fixer
+	@$(PHP_CS_FIXER) fix --allow-risky=yes --dry-run
+
 twigcs: ## Check twig coding standards
-	@(PHP) twigcs /tempates/
+	@$(TWIGCS) templates/
