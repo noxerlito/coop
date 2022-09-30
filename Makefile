@@ -60,12 +60,13 @@ cc: c=c:c ## Clear the cache
 cc: sf
 
 fixtures: ## Load fixtures
-	@$(SYMFONY) doctrine:fixtures:load
+	@$(SYMFONY) doctrine:fixtures:load -n
 
-db: ## Build the DB, control the schema validity, load fixtures and check the migration status
+db: ## Build the DB
 	@$(SYMFONY) doctrine:cache:clear-metadata
+	@$(SYMFONY) doctrine:database:drop --force
 	@$(SYMFONY) doctrine:database:create --if-not-exists
-	@$(SYMFONY) doctrine:migrations:migrate
+	@$(SYMFONY) doctrine:migrations:migrate -n
 
 migrations: ## Generate migrations
 	@$(SYMFONY) doctrine:migrations:diff --formatted
@@ -98,3 +99,5 @@ lint-php: ## Lint files with php-cs-fixer
 
 twigcs: ## Check twig coding standards
 	@$(TWIGCS) templates/
+
+ci: lint-php stan twigcs
