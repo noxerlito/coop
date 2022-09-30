@@ -17,6 +17,16 @@ enum TaskStatusEnum: string
         return array_column(self::cases(), 'value');
     }
 
+    public static function formChoices(): array
+    {
+        $choices = [];
+        foreach (self::cases() as $case) {
+            $choices[$case->value] = $case->value;
+        }
+
+        return $choices;
+    }
+
     public function getValue(): string
     {
         return $this->value;

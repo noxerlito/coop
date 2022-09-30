@@ -42,6 +42,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'assignedTo', targetEntity: Task::class)]
     private Collection $tasks;
 
+    // Only use for admin form, never stored in database
+    private ?string $plainPassword = null;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -119,8 +122,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     /**
@@ -176,6 +178,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $task->setAssignedTo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword ?? '';
+    }
+
+    public function setPlainPassword(?string $clearpassword): self
+    {
+        $this->plainPassword = $clearpassword;
 
         return $this;
     }
