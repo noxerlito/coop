@@ -15,26 +15,7 @@
     </head>
     <body>
     {% block header %}
-        <header class="bg-blue-300">
-            <div class="head container mx-auto p-2 flex flex-row justify-between">
-                <a href="#">
-                    <span class="text-xl">COOP</span>
-                </a>
-                <span class="ml-4 my-auto text-4xl font-bold">Ticketing</span>
-                <div class="my-auto flex flex-row gap-4">
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <a class="my-auto flex flex-row" href="#">
-                            <span class="ml-2 text-red">Admin</span>
-                        </a>
-                    {% endif %}
-                    {% if app.user %}
-                        <a class="my-auto flex flex-row" href="{{ path('app_logout') }}">
-                            <span class="ml-2 text-red">Se déconnecter</span>
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
-        </header>
+        {% include 'navbar.html.twig' %}
     {% endblock %}
 
     {% block body %}{% endblock %}
