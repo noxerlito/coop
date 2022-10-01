@@ -21,6 +21,8 @@ RUN yarn install
 
 COPY assets assets/
 COPY webpack.config.js ./
+COPY tailwind.config.js ./
+COPY postcss.config.js ./
 
 RUN yarn build
 
