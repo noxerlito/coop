@@ -28,7 +28,7 @@ class Task
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Callback(callback: 'getTaskStatusChoices')]
+    #[Assert\Choice(callback: 'getTaskStatusChoices')]
     private string $status;
 
     #[ORM\ManyToOne]

@@ -1,0 +1,9 @@
+{% if field.value is not empty %}
+    <ul>
+        {% for user in field.value %}
+            <li>{{ user.email }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <span>No users assigned yet.</span>
+{% endif %}
