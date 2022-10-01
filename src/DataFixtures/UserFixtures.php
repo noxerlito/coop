@@ -21,6 +21,8 @@ class UserFixtures extends Fixture
         $admin = new User();
         $admin
             ->setEmail('admin@coop.com')
+            ->setFirstName('Admin')
+            ->setLastName('Coop')
             ->setPassword($this->hasher->hashPassword($admin, 'admin'))
             ->setRoles(['ROLE_ADMIN'])
         ;
@@ -31,6 +33,8 @@ class UserFixtures extends Fixture
             $user = new User();
             $user
                 ->setEmail($faker->email())
+                ->setFirstName($faker->firstName())
+                ->setLastName($faker->lastName())
                 ->setPassword($this->hasher->hashPassword($user, 'admin'))
             ;
 
