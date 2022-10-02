@@ -80,6 +80,11 @@ class Project
         return $this;
     }
 
+    public function hasUser(User $user): bool
+    {
+        return $this->users->contains($user);
+    }
+
     public function removeUser(User $user): self
     {
         $this->users->removeElement($user);
