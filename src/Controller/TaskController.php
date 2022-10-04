@@ -34,7 +34,7 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}', name: 'task_show')]
     public function show(Task $task): Response
     {
-        $this->denyAccessUnlessGranted('read', $task);
+        $this->denyAccessUnlessGranted('task_read', $task);
 
         return $this->render('task/detail.html.twig', [
             'task' => $task,
@@ -67,7 +67,7 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}/edit', name: 'task_edit')]
     public function edit(Task $task, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('edit', $task);
+        $this->denyAccessUnlessGranted('task_edit', $task);
 
         $form = $this->createForm(TaskType::class, $task);
 
@@ -87,7 +87,7 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
     public function delete(Task $task): Response
     {
-        $this->denyAccessUnlessGranted('delete', $task);
+        $this->denyAccessUnlessGranted('task_delete', $task);
 
         $projectId = $task->getProject()->getId();
 

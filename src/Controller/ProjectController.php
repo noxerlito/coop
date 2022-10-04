@@ -17,43 +17,59 @@ class ProjectController extends AbstractController
     ) {
     }
 
-    #[Route('/project', name: 'app_project')]
+    #[Route('/project', name: 'project_list')]
     public function index(): Response
     {
         $projects = $this->projectRepository->findAll();
 
         return $this->render('project/index.html.twig', [
             'projects' => $projects,
-            'controller_name' => 'ProjectController',
         ]);
     }
 
-    #[Route('/project/add', name: 'app_project_add')]
+    #[Route('/project/create', name: 'project_create')]
     public function add(Request $request): Response
     {
         $project = new Project();
+        $this->denyAccessUnlessGranted('project_create', $project);
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->projectRepository->save($project, true);
 
-            return $this->redirectToRoute('app_project');
+            return $this->redirectToRoute('project_list');
         }
 
-        return $this->render('project/add.html.twig', [
+        return $this->render('project/form.html.twig', [
             'form' => $form->createView(),
-            'controller_name' => 'ProjectController',
+            'title' => "Ajout d'un nouveau projet",
         ]);
     }
 
-    #[Route('/project/{idProject}', name: 'app_project_edit')]
-    public function edit(int $idProject): Response
+    #[Route('/project/{id}', name: 'project_show')]
+    public function show(Project $project): Response
     {
-        $projects = $this->projectRepository->find($idProject);
+        return $this->render('project/show.html.twig', [
+            'project' => $project,
+        ]);
+    }
 
-        return $this->render('project/edit.html.twig', [
-            'project' => $projects,
-            'controller_name' => 'ProjectController',
+    #[Route('/project/{id}/edit', name: 'project_edit')]
+    public function edit(Project $project, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('project_edit');
+
+        $form = $this->createForm(ProjectType::class, $project);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->projectRepository->save($project, true);
+
+            return $this->redirectToRoute('project_list');
+        }
+
+        return $this->render('project/form.html.twig', [
+            'form' => $form->createView(),
+                'title' => "Edition d'un projet",
         ]);
     }
 }

@@ -9,9 +9,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class TaskVoter extends Voter
 {
-    private const READ = 'read';
-    private const EDIT = 'edit';
-    private const DELETE = 'delete';
+    private const READ = 'task_read';
+    private const EDIT = 'task_edit';
+    private const DELETE = 'task_delete';
 
     protected function supports(string $attribute, mixed $subject): bool
     {

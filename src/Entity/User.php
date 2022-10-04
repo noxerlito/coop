@@ -102,6 +102,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function hasRole(string $role): bool
+    {
+        return in_array($role, $this->roles, true);
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -216,5 +221,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lastName = $lastName;
 
         return $this;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('ROLE_ADMIN');
     }
 }
