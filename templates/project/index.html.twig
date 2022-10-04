@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ta liste de projets{% endblock %}
+
+{% block body %}
+<div class="container flex flex-col justify-center items-center">
+    <span class="text-2xl font-b mx-autoold text-black">Ta liste de projets</span>
+    <ul class="list-disc">
+    {% for project in projects %}
+        <li>
+            <a class="text-md font-semibold text-black no-underline hover:underline" href="{{ path('app_project_edit', {'idProject' : project.id })}}">{{project.name}}</a>
+        </li>
+    {% endfor %}
+    </ul>
+    <a href="{{ path('app_project_add') }}" class="mt-3 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Ajouter un projet</a>
+</div>
+{% endblock %}

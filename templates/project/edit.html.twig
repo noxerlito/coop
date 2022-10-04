@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block body %}
+    <div class="container flex flex-col justify-center items-center">
+        <span class="font-semibold text-2xl">{{project.name}}</span>
+        <p>Liste des utilisateurs du projet</p>
+        <ul class="list-disc">
+            {% for user in project.users %}
+                <li>
+                    <span class="text-md font-semibold text-black">{{user.firstName}} {{user.lastName}}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ path('app_project') }}" class="mt-3 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Retour à la liste des projets</a>
+    </div>
+{% endblock %}
