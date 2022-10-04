@@ -41,6 +41,8 @@ class UserCrudController extends AbstractCrudController
 
         return [
             EmailField::new('email')->hideWhenUpdating(),
+            TextField::new('firstName'),
+            TextField::new('lastName'),
             $passwordField,
             DateTimeField::new('createdAt')->setFormat('d/MM/Y HH:mm:ss')->setDisabled(),
             DateTimeField::new('updatedAt')->setFormat('d/MM/Y HH:mm:ss')->setDisabled(),

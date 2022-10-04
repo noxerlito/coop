@@ -15,6 +15,10 @@ class TaskCreator
 
     public function prePersist(Task $task): void
     {
+        if ($task->getCreatedBy() instanceof User) {
+            return;
+        }
+
         $user = $this->security->getUser();
 
         if (!$user instanceof User) {

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <p>Name : {{ task.name }}</p>
+    <p>Description : {{ task.description }}</p>
+    <p>Status : {{ task.status }}</p>
+    <p>Assigned to : {{ task.assignedTo|default('') }}</p>
+    <a href={{ path('task_edit', {'id': task.id}) }}>Edit</a>
+    <a href={{ path('task_delete', {'id': task.id}) }}>Delete</a>
+{% endblock %}
