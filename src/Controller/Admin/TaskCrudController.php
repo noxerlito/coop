@@ -35,7 +35,7 @@ class TaskCrudController extends AbstractCrudController
             AssociationField::new('createdBy')->setDisabled()->hideOnForm(),
             AssociationField::new('assignedTo')->autocomplete(),
             ChoiceField::new('status')
-                ->setChoices(TaskStatusEnum::formChoices())
+                ->setChoices(TaskStatusEnum::getClassConstants(null, true))
                 ->autocomplete(),
             DateTimeField::new('createdAt')->setFormat('d/MM/Y HH:mm:ss')->setDisabled(),
             DateTimeField::new('updatedAt')->setFormat('d/MM/Y HH:mm:ss')->setDisabled(),
