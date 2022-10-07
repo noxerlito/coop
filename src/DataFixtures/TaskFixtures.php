@@ -37,6 +37,8 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
         $faker = Factory::create();
 
+        $status = TaskStatusEnum::getClassConstants();
+
         for ($i = 0; $i < 20; ++$i) {
             $task = new Task();
             $task
@@ -44,7 +46,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
                 ->setDescription($faker->paragraph(5))
                 ->setCreatedBy($user)
                 ->setAssignedTo($user)
-                ->setStatus(TaskStatusEnum::values()[array_rand(TaskStatusEnum::values())])
+                ->setStatus($status[array_rand($status)])
                 ->setProject($project)
             ;
 

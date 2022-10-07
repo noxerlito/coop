@@ -29,7 +29,7 @@ class Task
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Choice(callback: 'getTaskStatusChoices')]
-    private string $status;
+    private string $status = TaskStatusEnum::PENDING;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -44,12 +44,11 @@ class Task
 
     public function __construct()
     {
-        $this->setStatus(TaskStatusEnum::PENDING->getValue());
     }
 
     public function getTaskStatusChoices(): array
     {
-        return TaskStatusEnum::values();
+        return TaskStatusEnum::getClassConstants();
     }
 
     public function getId(): ?int

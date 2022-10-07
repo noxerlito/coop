@@ -2,33 +2,17 @@
 
 namespace App\Enums;
 
-enum TaskStatusEnum: string
+use App\Traits\ClassConstHelperTrait;
+
+class TaskStatusEnum
 {
-    case PENDING = 'En attente';
-    case ASSIGNED = 'Assigné';
-    case IN_PROGRESS = 'En cours';
-    case IN_REVIEW = 'En attente de review';
-    case VALIDATED = 'Validé';
-    case REJECTED = 'Rejetté';
-    case COMPLETED = 'Complété';
+    use ClassConstHelperTrait;
 
-    public static function values(): array
-    {
-        return array_column(self::cases(), 'value');
-    }
-
-    public static function formChoices(): array
-    {
-        $choices = [];
-        foreach (self::cases() as $case) {
-            $choices[$case->value] = $case->value;
-        }
-
-        return $choices;
-    }
-
-    public function getValue(): string
-    {
-        return $this->value;
-    }
+    public const PENDING = 'En attente';
+    public const ASSIGNED = 'Assigné';
+    public const IN_PROGRESS = 'En cours';
+    public const IN_REVIEW = 'En attente de review';
+    public const VALIDATED = 'Validé';
+    public const REJECTED = 'Rejetté';
+    public const COMPLETED = 'Complété';
 }

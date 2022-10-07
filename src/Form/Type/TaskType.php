@@ -3,7 +3,7 @@
 namespace App\Form\Type;
 
 use App\Entity\User;
-use App\Enums\TaskStatusEnum;
+use App\Workflow\TaskStatusManager;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,13 +14,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class TaskType extends AbstractType
 {
+    public function __construct(
+        private TaskStatusManager $statusManager
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $task = $builder->getData();
+
         $builder
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('status', ChoiceType::class, [
-                'choices' => TaskStatusEnum::formChoices(),
+                'choices' => $this->statusManager->getAvailableStatus($task),
             ])
             ->add('assignedTo', EntityType::class, [
                 'class' => User::class,

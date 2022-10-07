@@ -1,0 +1,39 @@
+framework:
+    workflows:
+        task_status_change:
+            type: 'state_machine'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'method'
+                property: 'status'
+            supports:
+                - App\Entity\Task
+            initial_marking: !php/const App\Enums\TaskStatusEnum::PENDING
+            places:
+                - !php/const App\Enums\TaskStatusEnum::PENDING
+                - !php/const App\Enums\TaskStatusEnum::ASSIGNED
+                - !php/const App\Enums\TaskStatusEnum::IN_PROGRESS
+                - !php/const App\Enums\TaskStatusEnum::IN_REVIEW
+                - !php/const App\Enums\TaskStatusEnum::VALIDATED
+                - !php/const App\Enums\TaskStatusEnum::REJECTED
+                - !php/const App\Enums\TaskStatusEnum::COMPLETED
+            transitions:
+                to_assign:
+                    from: !php/const App\Enums\TaskStatusEnum::PENDING
+                    to: !php/const App\Enums\TaskStatusEnum::ASSIGNED
+                to_progress:
+                    from: !php/const App\Enums\TaskStatusEnum::ASSIGNED
+                    to: !php/const App\Enums\TaskStatusEnum::IN_PROGRESS
+                to_review:
+                    from: !php/const App\Enums\TaskStatusEnum::IN_PROGRESS
+                    to: !php/const App\Enums\TaskStatusEnum::IN_REVIEW
+                to_valid:
+                    from: !php/const App\Enums\TaskStatusEnum::IN_REVIEW
+                    to: !php/const App\Enums\TaskStatusEnum::VALIDATED
+                to_reject:
+                    from: !php/const App\Enums\TaskStatusEnum::IN_REVIEW
+                    to: !php/const App\Enums\TaskStatusEnum::REJECTED
+                to_complete:
+                    from: !php/const App\Enums\TaskStatusEnum::VALIDATED
+                    to: !php/const App\Enums\TaskStatusEnum::COMPLETED
